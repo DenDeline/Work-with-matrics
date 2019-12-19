@@ -1,14 +1,17 @@
 ﻿#include <iostream>
+#include <time.h>
+
 
 using namespace std;
 
 class Matrix 
 {
-public:
-	Matrix() { _line = _column = 1; CreateMatrix(_line, _column); }
-
-	Matrix(int line_size): Matrix() { _line = line_size; }
-	Matrix(int column_size, int line_size) : Matrix(line_size) { _column = column_size; }
+public: 
+	Matrix(int line_size = 1, int column_size = 1) 
+	{
+		_line = line_size; _column = column_size; 
+		CreateMatrix(_line, _column); 
+	}
 
 	int** CreateMatrix(int line_size, int colum_size)
 	{
@@ -21,6 +24,15 @@ public:
 		};
 
 		return _Data;
+	}
+
+	void RandomMatrix(int Eps) 
+	{
+		srand((int)time(0));
+
+		for (int i = 0; i < _line; i++)
+			for (int j = 0;j < _column;j++)
+				_Data[i][j] = rand() % Eps;
 	}
 
 	int* operator[] (int Number) { return _Data[Number]; }
@@ -44,8 +56,10 @@ int main()
 {
 	try 
 	{
-		Matrix a(3, 3);
-		a.at(3, 0) = 3;
+		Matrix a(5, 5);
+
+		a.RandomMatrix(100);
+
 		cout << a[0][0];
 
 		return 0;
