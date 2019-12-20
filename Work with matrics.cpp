@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <time.h>
-
+#include <iomanip>
 
 using namespace std;
 
@@ -31,8 +31,24 @@ public:
 		srand((int)time(0));
 
 		for (int i = 0; i < _line; i++)
+			for (int j = 0;j < _column;j++) 
+			{
+				if (rand()%2 == 0)
+					_Data[i][j] = rand() % Eps;
+				else
+					_Data[i][j] = -(rand()%Eps);
+			}
+	}
+
+	void ShowData ()
+	{
+		for (int i = 0;i < _line;i++) 
+		{
+			cout << setw(5);
 			for (int j = 0;j < _column;j++)
-				_Data[i][j] = rand() % Eps;
+				cout << _Data[i][j] << setw(5);
+			cout << endl;
+		}
 	}
 
 	int* operator[] (int Number) { return _Data[Number]; }
@@ -56,12 +72,9 @@ int main()
 {
 	try 
 	{
-		Matrix a(5, 5);
-
+		Matrix a(25, 25);
 		a.RandomMatrix(100);
-
-		cout << a[0][0];
-
+		a.ShowData();
 		return 0;
 	}
 	catch (exception & ex) { cout << ex.what(); }
