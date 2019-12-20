@@ -13,6 +13,16 @@ public:
 		CreateMatrix(_line, _column); 
 	}
 
+	Matrix(Matrix& OtherMatrix) 
+	{
+		_line = OtherMatrix._line; _column = OtherMatrix._column;
+
+		CreateMatrix(_line, _column);
+		for (int i = 0;i < _line;i++)
+			for (int j = 0;j < _column;j++)
+				_Data[i][j] = OtherMatrix[i][j];
+	};
+
 	int** CreateMatrix(int line_size, int colum_size)
 	{
 		_Data = new int* [line_size];
@@ -51,6 +61,17 @@ public:
 		}
 	}
 
+	Matrix operator+ (Matrix& OtherMatrix) 
+	{
+		if (this->_line != OtherMatrix._line && this->_column != OtherMatrix._column)
+			throw exception("You choose matrix with different size!");
+		Matrix NewMatrix(_line, _column);
+		for (int i = 0;i < _line;i++)
+			for (int j = 0;j < _column;j++)
+				NewMatrix[i][j] = _Data[i][j] + OtherMatrix[i][j];
+		return NewMatrix;
+	}
+
 	int* operator[] (int Number) { return _Data[Number]; }
 	int& at (int _line, int _column) 
 	{
@@ -72,9 +93,19 @@ int main()
 {
 	try 
 	{
-		Matrix a(25, 25);
+		Matrix a(5, 5);
 		a.RandomMatrix(100);
 		a.ShowData();
+
+		Matrix c(2, 2);
+
+		Matrix b(a);
+
+		cout << endl << endl;
+		b.ShowData();
+
+		cout << endl << endl;
+		(a + c).ShowData();
 		return 0;
 	}
 	catch (exception & ex) { cout << ex.what(); }
