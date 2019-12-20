@@ -83,30 +83,46 @@ public:
 
 	~Matrix() { delete[]_Data; };
 
-private:
+protected:
 	int** _Data, _line, _column;
 };
 
+class Square_Matrix : public Matrix
+{
+public:
+	Square_Matrix(int Size) : Matrix(Size, Size) { };
 
+	int MatrixDeterminant()
+	{
+		if (_line == 2)
+			return _Data[0][0] * _Data[1][1] - _Data[1][0] - _Data[0][1];
+		else if (_line == 3)
+			return _Data[0][0] * _Data[1][1] * _Data[2][2] + _Data[0][1] * _Data[1][2] * _Data[2][0] + _Data[1][0] * _Data[0][2] * _Data[2][1] - _Data[0][2] * _Data[1][1] * _Data[2][0] - _Data[0][1] * _Data[1][0] * _Data[2][2] - _Data[0][0] * _Data[1][2] * _Data[2][1];
+		else
+			return 0;
+	}
+
+	int MatrixDeterminant2()
+	{
+		for (int i =0; i<_line; i++)
+		{
+		
+		}
+	}
+
+};
 
 int main()
 {
 	try 
 	{
-		Matrix a(5, 5);
-		a.RandomMatrix(100);
+		
+		Square_Matrix a (3);
+		a.RandomMatrix(10);
 		a.ShowData();
 
-		Matrix c(2, 2);
-
-		Matrix b(a);
-
-		cout << endl << endl;
-		b.ShowData();
-
-		cout << endl << endl;
-		(a + c).ShowData();
-		return 0;
+		cout << a.MatrixDeterminant();
+		
 	}
 	catch (exception & ex) { cout << ex.what(); }
 }
